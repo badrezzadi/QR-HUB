@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QR PIDO</title>
+    <link rel="icon" type="image/png" href="/static/logo.png" />
+    <style>
+      body {
+        background-color: #0f172a;
+        color: #f1f5f9;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 600px;
+        background-color: #1e293b;
+        padding: 2rem 2.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        box-sizing: border-box;
+      }
+
+      h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #000000; /* اللون الأسود */
+  font-weight: 700;
+  font-size: 2.5rem;
+  user-select: none;
+}
+
+      input[type="text"],
+      input[type="file"],
+      button {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        margin-bottom: 1.25rem;
+        border-radius: 0.5rem;
+        border: none;
+        font-size: 1.1rem;
+        box-sizing: border-box;
+      }
+
+      input[type="text"] {
+        background-color: #334155;
+        color: #f1f5f9;
+        outline: none;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="text"]::placeholder {
+        color: #94a3b8;
+      }
+
+      input[type="text"]:focus {
+        background-color: #475569;
+      }
+
+      input[type="file"] {
+        background-color: transparent;
+        color: #f1f5f9;
+        cursor: pointer;
+      }
+
+      button {
+        background-color: #38bdf8;
+        color: #0f172a;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border: 2px solid transparent;
+        box-shadow: 0 0 8px #38bdf8;
+      }
+
+      button:hover {
+        background-color: #0ea5e9;
+        box-shadow: 0 0 12px #0ea5e9;
+      }
+
+      .separator {
+        text-align: center;
+        color: #94a3b8;
+        margin: 1rem 0 1.5rem;
+        font-weight: 600;
+        user-select: none;
+      }
+
+      .qr-preview {
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+
+      .qr-preview img {
+        max-width: 100%;
+        max-height: 320px;
+        border-radius: 0.5rem;
+        border: 2px solid #38bdf8;
+        box-shadow: 0 0 15px #38bdf8;
+      }
+
+      .download-link {
+        display: block;
+        text-align: center;
+        margin-top: 1rem;
+        color: #38bdf8;
+        font-weight: 600;
+        text-decoration: underline;
+        user-select: none;
+        transition: color 0.3s ease;
+      }
+
+      .download-link:hover {
+        color: #0ea5e9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" role="main" aria-label="QR Code Generator">
+      <h1>QR PIDO</h1>
+
+      <form method="POST" enctype="multipart/form-data" novalidate>
+        <input
+          type="text"
+          name="data"
+          placeholder="Enter text or URL"
+          autocomplete="off"
+          aria-label="Text or URL input"
+        />
+
+        <div class="separator" aria-hidden="true">or</div>
+
+        <input
+          type="file"
+          name="image"
+          accept="image/*"
+          aria-label="Upload image for QR code generation"
+        />
+
+        <button type="submit" aria-label="Generate QR Code">Generate QR Code</button>
+      </form>
+
+      {% if qr_path %}
+        <div class="qr-preview" aria-live="polite">
+          <img src="{{ qr_path }}" alt="Generated QR Code" />
+          <a href="/download" class="download-link">Download QR Code</a>
+        </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
