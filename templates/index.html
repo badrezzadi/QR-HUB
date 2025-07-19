@@ -5,7 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>QR PIDO</title>
     <link rel="icon" type="image/png" href="/static/logo.png" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-93KSC54SCF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-93KSC54SCF');
+    </script>
+    <!-- نهاية Google Analytics -->
+
     <style>
+      @keyframes rgbShift {
+        0% {
+          filter: hue-rotate(0deg);
+          text-shadow:
+            2px 2px 0 #ff0000,
+            4px 4px 0 #00ff00,
+            6px 6px 0 #0000ff,
+            8px 8px 8px rgba(0,0,0,0.5);
+        }
+        50% {
+          filter: hue-rotate(180deg);
+          text-shadow:
+            2px 2px 0 #00ff00,
+            4px 4px 0 #0000ff,
+            6px 6px 0 #ff0000,
+            8px 8px 8px rgba(0,0,0,0.5);
+        }
+        100% {
+          filter: hue-rotate(360deg);
+          text-shadow:
+            2px 2px 0 #ff0000,
+            4px 4px 0 #00ff00,
+            6px 6px 0 #0000ff,
+            8px 8px 8px rgba(0,0,0,0.5);
+        }
+      }
+
       body {
         background-color: #0f172a;
         color: #f1f5f9;
@@ -26,16 +65,23 @@
         border-radius: 1rem;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         box-sizing: border-box;
+        text-align: center;
       }
 
       h1 {
-  text-align: center;
-  margin-bottom: 2rem;
-  color: #000000; /* اللون الأسود */
-  font-weight: 700;
-  font-size: 2.5rem;
-  user-select: none;
-}
+        margin-bottom: 2rem;
+        font-weight: 900;
+        font-size: 3.5rem;
+        color: #38bdf8;
+        animation: rgbShift 7s linear infinite;
+        user-select: none;
+        /* تأثير ثلاثي الأبعاد */
+        text-shadow:
+          2px 2px 0 #ff0000,
+          4px 4px 0 #00ff00,
+          6px 6px 0 #0000ff,
+          8px 8px 8px rgba(0,0,0,0.6);
+      }
 
       input[type="text"],
       input[type="file"],
@@ -47,6 +93,7 @@
         border: none;
         font-size: 1.1rem;
         box-sizing: border-box;
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
       }
 
       input[type="text"] {
@@ -62,6 +109,10 @@
 
       input[type="text"]:focus {
         background-color: #475569;
+        box-shadow:
+          0 0 8px #38bdf8,
+          0 0 15px #0ea5e9;
+        border: 1.5px solid #38bdf8;
       }
 
       input[type="file"] {
@@ -71,22 +122,27 @@
       }
 
       button {
-        background-color: #38bdf8;
+        background: linear-gradient(270deg, #38bdf8, #0ea5e9, #3b82f6, #2563eb);
+        background-size: 800% 800%;
         color: #0f172a;
         font-weight: 700;
         cursor: pointer;
-        transition: background-color 0.3s ease;
-        border: 2px solid transparent;
-        box-shadow: 0 0 8px #38bdf8;
+        border: none;
+        box-shadow:
+          0 0 8px #38bdf8,
+          0 0 15px #0ea5e9;
+        animation: rgbShift 7s linear infinite;
+        transition: background-position 0.3s ease;
       }
 
       button:hover {
-        background-color: #0ea5e9;
-        box-shadow: 0 0 12px #0ea5e9;
+        background-position: 100% 0;
+        box-shadow:
+          0 0 12px #0ea5e9,
+          0 0 25px #38bdf8;
       }
 
       .separator {
-        text-align: center;
         color: #94a3b8;
         margin: 1rem 0 1.5rem;
         font-weight: 600;
@@ -94,7 +150,6 @@
       }
 
       .qr-preview {
-        text-align: center;
         margin-top: 1.5rem;
       }
 
@@ -103,22 +158,47 @@
         max-height: 320px;
         border-radius: 0.5rem;
         border: 2px solid #38bdf8;
-        box-shadow: 0 0 15px #38bdf8;
+        box-shadow:
+          0 0 15px #38bdf8,
+          0 0 25px #0ea5e9;
       }
 
       .download-link {
-        display: block;
-        text-align: center;
+        display: inline-block;
         margin-top: 1rem;
         color: #38bdf8;
         font-weight: 600;
         text-decoration: underline;
         user-select: none;
         transition: color 0.3s ease;
+        animation: rgbShift 7s linear infinite;
       }
 
       .download-link:hover {
         color: #0ea5e9;
+      }
+
+      /* Instructions style */
+      .instructions {
+        margin-top: 2rem;
+        padding: 1rem;
+        background-color: #334155;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 8px #0ea5e9;
+        user-select: none;
+        text-align: left;
+        color: #cbd5e1;
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+      .instructions h2 {
+        font-weight: 700;
+        color: #38bdf8;
+        margin-bottom: 0.5rem;
+      }
+      .instructions ul {
+        margin: 0;
+        padding-left: 1.2rem;
       }
     </style>
   </head>
@@ -146,6 +226,16 @@
 
         <button type="submit" aria-label="Generate QR Code">Generate QR Code</button>
       </form>
+
+      <div class="instructions" aria-label="Instructions">
+        <h2>How to Use</h2>
+        <ul>
+          <li>Enter the text or URL you want to generate a QR code for in the text box above.</li>
+          <li>Or upload an image to generate a QR code based on it.</li>
+          <li>Click the "Generate QR Code" button to see the result below.</li>
+          <li>You can download the generated QR code by clicking the "Download QR Code" link.</li>
+        </ul>
+      </div>
 
       {% if qr_path %}
         <div class="qr-preview" aria-live="polite">
